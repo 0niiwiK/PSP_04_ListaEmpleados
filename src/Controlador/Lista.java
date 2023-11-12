@@ -63,11 +63,11 @@ public class Lista {
             lastNode = temp;
             counter = 1;
         } else {
-            firstNode.setPrevNode(temp);
-            temp.setNextNode(firstNode);
-            temp.setPrevNode(null);
-            firstNode = temp;
+            lastNode.setNextNode(temp);
+            temp.setPrevNode(lastNode);
+            lastNode = temp;
             counter++;
+
         }
         act = temp;
     }
@@ -244,16 +244,26 @@ public class Lista {
     public void leerArchivo(String ruta) {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ruta));
-            Empleado aux = (Empleado) ois.readObject();
+            Object aux = ois.readObject();
 
             while (aux != null) {
-                add(aux);
-                aux = (Empleado) ois.readObject();
+                add((Empleado) aux);
+                aux = ois.readObject();
             }
-
             ois.close();
+        } catch (EOFException e) {
+            System.out.println("Se termino de leer el archivo");
         } catch (Exception e) {
             System.out.println("No se puede leer en este archivo");
         }
+    }
+
+    public void imprimir(){
+        goFirst();
+        while(!isLast()){
+            System.out.println(getAct().toString());
+            goNext();
+        }
+        System.out.println(getAct().toString());
     }
 }
