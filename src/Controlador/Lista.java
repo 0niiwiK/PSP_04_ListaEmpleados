@@ -253,7 +253,7 @@ public class Lista {
 
             ois.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("No se puede leer en este archivo");
         }
     }
 }
