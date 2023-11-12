@@ -269,10 +269,10 @@ public class Lista {
     }
 
     public void crearEmpleadosAleatorios() throws SueldoSuperiorAMaximo {
-        int op = (int) (Math.random() * 2);
         int numero = ((int) (Math.random() * 1001)) + 1000;
         
         for (int i = 0; i < 10; i++) {
+            int op = (int) (Math.random() * 2);
             while (existe(numero)) {
                 numero = ((int) (Math.random() * 1001)) + 1000;
             }
