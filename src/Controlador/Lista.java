@@ -228,10 +228,18 @@ public class Lista {
     public void escribirArchivo(String ruta) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ruta));
-        } catch (IOException e) {
-
-        } catch (SecurityException e) {
-
+            goFirst();
+            while (!isLast()) {
+                oos.writeObject(act.main);
+                goNext();
+            }
+            oos.writeObject(act.main);
+            oos.close();
+        } catch (Exception e) {
+            System.out.println("No se puede guardar en este archivo");
         }
     }
+
+
+
 }
