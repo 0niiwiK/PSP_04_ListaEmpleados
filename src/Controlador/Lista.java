@@ -2,6 +2,9 @@ package Controlador;
 import Modelo.*;
 import usarExcepciones.EmpleadoNoEncontrado;
 
+import javax.imageio.IIOException;
+import java.io.*;
+
 
 public class Lista {
     static int counter = 0;
@@ -89,7 +92,7 @@ public class Lista {
         return act.nextNode;
     }
 
-    public static void goFirst() {
+    public void goFirst() {
         setAct(getFirstNode());
     }
 
@@ -200,7 +203,7 @@ public class Lista {
         }
     }
 
-    public void ordenarBurbuja() {
+    public void sort() {
         Node actual;
         Node siguiente;
         boolean intercambio;
@@ -222,4 +225,10 @@ public class Lista {
         } while (intercambio);
     }
 
+    public void escribirArchivo(String ruta) {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(ruta)));
+        } catch (Exception e) {
+        }
+    }
 }

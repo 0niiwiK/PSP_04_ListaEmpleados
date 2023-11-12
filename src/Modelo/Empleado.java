@@ -27,8 +27,6 @@ public class Empleado implements Serializable {
         return num_empleado;
     }
 
-    // TODO
-
     public float getSueldo() {
 
         return sueldo;
