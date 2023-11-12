@@ -268,14 +268,32 @@ public class Lista {
         System.out.println(getAct().toString());
     }
 
-    public void crearAleatoriosDiez() throws SueldoSuperiorAMaximo {
+    public void crearAleatorios() throws SueldoSuperiorAMaximo {
         int numero = ((int) (Math.random() * 1001)) + 1000;
-        
-        for (int i = 0; i < 10; i++) {
+
+        int op = (int) (Math.random() * 2);
+
+        while (existe(numero)) {
+            numero = ((int) (Math.random() * 1001)) + 1000;
+        }
+
+        if (op == 0) {
+            Analista aux = new Analista(numero, "Juan", 2000, 2500, 0, 0);
+            add(aux);
+        } else {
+            Programador aux = new Programador(numero, "Pedro", 2000, 2500, 0, "Java");
+            add(aux);
+        }
+    }
+
+    public void crearAleatoriosCienMil() throws SueldoSuperiorAMaximo {
+        int numero = ((int) (Math.random() * 98001 )) + 2001;
+
+        for (int i = 0; i < 100000; i++) {
             int op = (int) (Math.random() * 2);
-            
+
             while (existe(numero)) {
-                numero = ((int) (Math.random() * 1001)) + 1000;
+                numero = ((int) (Math.random() * 98001 )) + 2001;
             }
 
             if (op == 0) {
