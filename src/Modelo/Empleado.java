@@ -1,10 +1,10 @@
 package Modelo;
 
 import usarExcepciones.SueldoSuperiorAMaximo;
-
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Empleado {
+public class Empleado implements Serializable {
     private static String SUELDO_EXCEPTION = "SUELDO_SUPERIOR_MAXIMO";
     int num_empleado;
     transient String nombre;
@@ -29,4 +29,27 @@ public class Empleado {
 
     // TODO
 
+    public float getSueldo() {
+
+        return sueldo;
+    }
+
+    public void setSueldo(float sueldo) throws SueldoSuperiorAMaximo {
+        this.sueldo = sueldo;
+        if (sueldo > this.sueldo_max)
+            throw new SueldoSuperiorAMaximo();
+        else
+            this.sueldo = sueldo;
+    }
+
+    public float getSueldo_max() {
+        return sueldo_max;
+    }
+
+    public void setSueldo_max(float sueldo_max) throws SueldoSuperiorAMaximo {
+            if (this.sueldo > sueldo_max)
+                throw new SueldoSuperiorAMaximo();
+            else
+                this.sueldo_max = sueldo_max;
+    }
 }
