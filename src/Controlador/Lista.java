@@ -241,5 +241,19 @@ public class Lista {
     }
 
 
+    public void leerArchivo(String ruta) {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ruta));
+            Empleado aux = (Empleado) ois.readObject();
 
+            while (aux != null) {
+                add(aux);
+                aux = (Empleado) ois.readObject();
+            }
+
+            ois.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
