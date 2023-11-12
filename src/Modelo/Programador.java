@@ -14,6 +14,6 @@ public class Programador extends Empleado {
 
     @Override
     public String toString() {
-        return super.toString() + ", sueldo_extra_mensual: " + sueldo_extra_mensual + ", lenguaje_principal: " + lenguaje_principal;
+        return super.toString() + ", sueldo_extra_mensual: " + sueldo_extra_mensual + ", lenguaje_principal: " + lenguaje_principal + " PROGRAMADOR";
     }
 }

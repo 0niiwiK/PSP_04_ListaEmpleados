@@ -14,7 +14,7 @@ public class Analista extends Empleado {
 
     @Override
     public String toString() {
-        return super.toString()+", plus_anual: "+plus_anual+", anios_experiencia: "+anios_experiencia;
+        return super.toString()+", plus_anual: "+plus_anual+", anios_experiencia: "+anios_experiencia+" ANALISTA";
     }
 
     // TODO

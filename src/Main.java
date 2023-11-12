@@ -2,22 +2,43 @@ import Controlador.Lista;
 import Modelo.*;
 import usarExcepciones.SueldoSuperiorAMaximo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
+        probarDesordenados();
+    }
+
+    public static void probarDesordenados(){
         try {
             Lista l = new Lista();
-            l.add(new Empleado(1, "Pedro", 1000, 2000));
-            l.add(new Empleado(2, "Juan", 2000, 3000));
-            l.add(new Empleado(3, "Maria", 3000, 4000));
-            l.add(new Analista(4, "Jose", 4000, 5000, 0.25, 2));
+            long startTime = System.nanoTime();
+            for (int i = 0; i < 10; i++) {
+                l.crearAleatorios();
+            }
             l.imprimir();
-            l.intercambiar(1,3);
-            l.intercambiar(4,1);
-            System.out.println("");
-            l.imprimir();
+            l.crearAleatoriosCienMil();
+            long endTime = System.nanoTime();
+            System.out.println("Tiempo creacion: " + (endTime - startTime) / 1000000 + " ms");
+            List<Empleado> lista = new ArrayList<>();
+            l.goFirst();
+            startTime = System.nanoTime();
+            while (!l.isLast()) {
+                lista.add(l.getAct().getMain());
+                l.goNext();
+            }
+            lista.add(l.getAct().getMain());
+            endTime = System.nanoTime();
+            System.out.println("Tiempo insercion coleccion: " + (endTime - startTime) / 1000000 + " ms");
             l.sort();
-            System.out.println("");
-            l.imprimir();
+            startTime = System.nanoTime();
+            lista.sort(Comparator.comparing(Empleado::getNum_empleado));
+            endTime = System.nanoTime();
+            System.out.println("Tiempo orden collec: " + (endTime - startTime) / 1000000 + " ms");
+           // lista.forEach(System.out::println);
         } catch (Exception e) {
             System.out.println("Otro");
         }

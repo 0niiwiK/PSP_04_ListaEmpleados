@@ -11,7 +11,7 @@ import java.io.*;
 public class Lista {
     static int counter = 0;
 
-    public class Node {
+    public static class Node {
         int indice;
         Empleado main;
         Node nextNode;
@@ -45,6 +45,10 @@ public class Lista {
         @Override
         public String toString() {
             return "" + main.toString();
+        }
+
+        public Empleado getMain() {
+            return main;
         }
     }
 
@@ -208,10 +212,12 @@ public class Lista {
         Node actual;
         Node siguiente;
         boolean intercambio;
+        long startTime = System.nanoTime();
         do {
             intercambio = false;
             actual = getFirstNode();
-            while (actual != null && actual.nextNode != null) {
+            Node lastNode = null;
+            while (actual != lastNode && actual.nextNode != null) {
                 siguiente = actual.nextNode;
                 if (actual.indice > siguiente.indice) {
                     try {
@@ -224,6 +230,8 @@ public class Lista {
                 actual = siguiente;
             }
         } while (intercambio);
+        long endTime = System.nanoTime();
+        System.out.println("Tiempo ordenación: " + (endTime - startTime) / 1000000 + " ms");
     }
 
     public void escribirArchivo(String ruta) {
@@ -240,7 +248,6 @@ public class Lista {
             System.out.println("No se puede guardar en este archivo");
         }
     }
-
 
     public void leerArchivo(String ruta) {
         try {
@@ -273,8 +280,10 @@ public class Lista {
 
         int op = (int) (Math.random() * 2);
 
-        while (existe(numero)) {
-            numero = ((int) (Math.random() * 1001)) + 1000;
+        if (this.firstNode != null) {
+            while (existe(numero)) {
+                numero = ((int) (Math.random() * 1001)) + 1000;
+            }
         }
 
         if (op == 0) {
@@ -289,7 +298,7 @@ public class Lista {
     public void crearAleatoriosCienMil() throws SueldoSuperiorAMaximo {
         int numero = ((int) (Math.random() * 98001 )) + 2001;
 
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 10000; i++) {
             int op = (int) (Math.random() * 2);
 
             while (existe(numero)) {
@@ -305,4 +314,8 @@ public class Lista {
             }
         }
     }
+
+
+
+
 }
