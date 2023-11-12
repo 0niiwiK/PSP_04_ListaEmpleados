@@ -228,25 +228,18 @@ public class Lista {
     public void escribirArchivo(String ruta) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ruta));
-        } catch (IOException e) {
-
-        } catch (SecurityException e) {
-
-        }
-    }
-    public void leerArchivo(String ruta) {
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ruta));
-            Empleado aux = (Empleado) ois.readObject();
-            
-            while (aux != null) {
-                add(aux);
-                aux = (Empleado) ois.readObject();
+            goFirst();
+            while (!isLast()) {
+                oos.writeObject(act.main);
+                goNext();
             }
-
-            ois.close();
+            oos.writeObject(act.main);
+            oos.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("No se puede guardar en este archivo");
         }
     }
+
+
+
 }
