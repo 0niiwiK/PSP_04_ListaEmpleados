@@ -227,8 +227,11 @@ public class Lista {
 
     public void escribirArchivo(String ruta) {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(ruta)));
-        } catch (Exception e) {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ruta));
+        } catch (IOException e) {
+
+        } catch (SecurityException e) {
+
         }
     }
 }
