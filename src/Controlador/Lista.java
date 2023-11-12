@@ -1,6 +1,8 @@
 package Controlador;
+
 import Modelo.*;
 import usarExcepciones.EmpleadoNoEncontrado;
+import usarExcepciones.SueldoSuperiorAMaximo;
 
 import javax.imageio.IIOException;
 import java.io.*;
@@ -67,7 +69,6 @@ public class Lista {
             temp.setPrevNode(lastNode);
             lastNode = temp;
             counter++;
-
         }
         act = temp;
     }
@@ -258,12 +259,30 @@ public class Lista {
         }
     }
 
-    public void imprimir(){
+    public void imprimir() {
         goFirst();
-        while(!isLast()){
+        while (!isLast()) {
             System.out.println(getAct().toString());
             goNext();
         }
         System.out.println(getAct().toString());
+    }
+
+    public void crearEmpleadosAleatorios() throws SueldoSuperiorAMaximo {
+        int op = (int) (Math.random() * 1);
+        int numero = ((int) (Math.random() * 1000)) + 1000;
+        
+        for (int i = 0; i < 10; i++) {
+            while (existe(numero)) {
+                numero = ((int) (Math.random() * 1000)) + 1000;
+            }
+            if (op == 0) {
+                Analista aux = new Analista(numero, "Juan", 2000, 2500, 0, 0);
+                add(aux);
+            } else {
+                Programador aux = new Programador(numero, "Pedro", 2000, 2500, 0, "Java");
+                add(aux);
+            }
+        }
     }
 }
