@@ -274,8 +274,9 @@ public class Lista {
         
         for (int i = 0; i < 10; i++) {
             while (existe(numero)) {
-                numero = ((int) (Math.random() * 1000)) + 1000;
+                numero = ((int) (Math.random() * 1001)) + 1000;
             }
+            System.out.println(op);
             if (op == 0) {
                 Analista aux = new Analista(numero, "Juan", 2000, 2500, 0, 0);
                 add(aux);
