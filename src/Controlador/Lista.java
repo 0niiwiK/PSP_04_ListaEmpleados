@@ -268,15 +268,16 @@ public class Lista {
         System.out.println(getAct().toString());
     }
 
-    public void crearEmpleadosAleatorios() throws SueldoSuperiorAMaximo {
+    public void crearAleatoriosDiez() throws SueldoSuperiorAMaximo {
         int numero = ((int) (Math.random() * 1001)) + 1000;
         
         for (int i = 0; i < 10; i++) {
             int op = (int) (Math.random() * 2);
+            
             while (existe(numero)) {
                 numero = ((int) (Math.random() * 1001)) + 1000;
             }
-            System.out.println(op);
+
             if (op == 0) {
                 Analista aux = new Analista(numero, "Juan", 2000, 2500, 0, 0);
                 add(aux);
