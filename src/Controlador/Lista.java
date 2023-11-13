@@ -159,7 +159,7 @@ public class Lista {
         return getAct() == getFirstNode();
     }
 
-    public Node getElementListIndex(int x) {
+    public Node getEmpleadoAt(int x) {
         if (x <= counter) {
             this.setAct(getFirstNode());
             for (int i = 0; i < x; i++) {

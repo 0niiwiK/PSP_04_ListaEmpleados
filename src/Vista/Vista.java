@@ -2,7 +2,15 @@ package Vista;
 
 import Controlador.Lista;
 
+import Modelo.Analista;
+import Modelo.Empleado;
+import Modelo.Programador;
+
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.FileChooserUI;
+import java.io.File;
 
 public class Vista {
     private JPanel panel1;
@@ -60,6 +68,19 @@ public class Vista {
             }
         });
 
+        jl_lista.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                JList list = (JList) e.getSource();
+                System.out.println(list.getSelectedIndex());
+            }
+        });
+
+        btnCrear.addActionListener(e -> {
+            Empleados dialog = new Empleados(listaempleados);
+            dialog.pack();
+            dialog.setVisible(true);
+        });
+
         btnGuardar.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -87,10 +108,13 @@ public class Vista {
         listaempleados = new Lista();
         listModel = new DefaultListModel<>();
         try {
-
+            listaempleados.add(new Programador(1, "Pedro", 2000, 2500, 0, "Java"));
+            listaempleados.add(new Programador(2, "Juan", 2200, 2600, 0, "Python"));
+            listaempleados.add(new Analista(3, "Carla", 3000, 3200, 0, 0));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        listaempleados.goFirst();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
             listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();

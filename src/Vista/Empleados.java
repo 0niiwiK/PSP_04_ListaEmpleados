@@ -1,5 +1,7 @@
 package Vista;
 
+import Controlador.Lista;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -8,7 +10,7 @@ public class Empleados extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
 
-    public Empleados() {
+    public Empleados(Lista l) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -52,9 +54,6 @@ public class Empleados extends JDialog {
     }
 
     public static void main(String[] args) {
-        Empleados dialog = new Empleados();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+
     }
 }
