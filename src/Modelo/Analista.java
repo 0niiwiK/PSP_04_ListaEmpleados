@@ -12,6 +12,7 @@ public class Analista extends Empleado {
         this.anios_experiencia = anios_experiencia;
     }
 
+    @Override
     public String getTipo() {
         return "Analista";
     }

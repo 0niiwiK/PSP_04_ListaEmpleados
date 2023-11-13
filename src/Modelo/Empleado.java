@@ -51,6 +51,10 @@ public class Empleado implements Serializable {
                 this.sueldo_max = sueldo_max;
     }
 
+    public String getTipo() {
+        return "Empleado";
+    }
+
     @Override
     public String toString() {
         return "Número de Empleado: " + num_empleado + ", Nombre: " + nombre + ", Sueldo: " + sueldo + ", Sueldo Máximo: " + sueldo_max;

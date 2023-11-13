@@ -12,6 +12,7 @@ public class Programador extends Empleado {
         this.lenguaje_principal = lenguaje_principal;
     }
 
+    @Override
     public String getTipo() {
         return "PROGRAMADOR";
     }
