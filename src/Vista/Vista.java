@@ -53,15 +53,17 @@ public class Vista {
         listaempleados = new Lista();
         listModel = new DefaultListModel<>();
         try {
-            listaempleados.add(new Empleado(1, "Pepito", 1000, 2000));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        while (!listaempleados.isLast()) {
+        while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
             listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
         }
-        listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+        if (!listaempleados.isEmpty())
+            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+
         jl_lista = new JList<>(listModel);
         scrollPane = new JScrollPane(jl_lista);
     }

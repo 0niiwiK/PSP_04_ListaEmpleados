@@ -184,6 +184,12 @@ public class Lista {
                 found = true;
         return found;
     }
+    public boolean isEmpty(){
+        if (getAct() == null)
+            return true;
+        else
+            return false;
+    }
 
     public Node goNumEmp(int numEmp) {
         goFirst();
