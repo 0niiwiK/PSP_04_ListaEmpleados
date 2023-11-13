@@ -10,22 +10,12 @@ public class Vista {
     private JPanel panel1;
     private JList<String> jl_lista;
     JScrollPane scrollPane;
-    private DefaultListModel<String> listModel = new DefaultListModel<>();
+    private DefaultListModel<String> listModel;
+    Lista listaempleados;
 
     public Vista() {
-        Lista listaempleados = new Lista();
 
-        try {
-            listaempleados.add(new Empleado(1, "Pepito", 1000, 2000));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        while (!listaempleados.isLast()) {
-            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
-            listaempleados.goNext();
-        }
-        listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
-        scrollPane = new JScrollPane(jl_lista);
+
     }
 
 
@@ -38,7 +28,20 @@ public class Vista {
     }
 
     private void createUIComponents() {
+        listaempleados = new Lista();
+        listModel = new DefaultListModel<>();
+        try {
+            listaempleados.add(new Empleado(1, "Pepito", 1000, 2000));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while (!listaempleados.isLast()) {
+            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listaempleados.goNext();
+        }
+        listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
         jl_lista = new JList<>(listModel);
+        scrollPane = new JScrollPane(jl_lista);
     }
 }
 
