@@ -2,6 +2,9 @@ package Modelo;
 
 import usarExcepciones.SueldoSuperiorAMaximo;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Empleado implements Serializable {
@@ -11,6 +14,7 @@ public class Empleado implements Serializable {
     float sueldo;
     float sueldo_max;
     GregorianCalendar fecha_alta;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 
     public Empleado(int num_empleado, String nombre, float sueldo, float sueldo_max) throws SueldoSuperiorAMaximo {
@@ -18,10 +22,31 @@ public class Empleado implements Serializable {
         this.nombre = nombre;
         this.sueldo = sueldo;
         this.sueldo_max = sueldo_max;
+        this.fecha_alta = new GregorianCalendar();
 
         if (this.sueldo > this.sueldo_max)
             throw new SueldoSuperiorAMaximo();
     }
+
+    public Empleado(int num_empleado, String nombre, float sueldo,String fecha, float sueldo_max) throws SueldoSuperiorAMaximo {
+        this.num_empleado = num_empleado;
+        this.nombre = nombre;
+        this.sueldo = sueldo;
+        this.sueldo_max = sueldo_max;
+
+        if (this.sueldo > this.sueldo_max)
+            throw new SueldoSuperiorAMaximo();
+
+        try {
+            Date dateAux = sdf.parse(fecha);
+            GregorianCalendar calendarAux = new GregorianCalendar();
+            calendarAux.setTime(dateAux);
+            this.fecha_alta = calendarAux;
+        } catch (ParseException e) {
+            throw new RuntimeException("la cadena de fecha no tiene el formato adecuado", e);
+        }
+    }
+
 
     public int getNum_empleado() {
         return num_empleado;
@@ -39,7 +64,7 @@ public class Empleado implements Serializable {
         else
             this.sueldo = sueldo;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -56,6 +81,11 @@ public class Empleado implements Serializable {
         this.fecha_alta = fecha_alta;
     }
 
+    public void setNum_empleado(int num_empleado) {
+        this.num_empleado = num_empleado;
+    }
+    
+
     public float getSueldo_max() {
         return sueldo_max;
     }
@@ -65,6 +95,9 @@ public class Empleado implements Serializable {
                 throw new SueldoSuperiorAMaximo();
             else
                 this.sueldo_max = sueldo_max;
+    }
+    public String getsdfFecha(GregorianCalendar calendar) {
+        return sdf.format(calendar.getTime());
     }
 
     public String getTipo() {

@@ -45,9 +45,6 @@ public class Vista {
     Lista.Node nodo_actual;
 
     public Vista() {
-        btnSiguiente.addActionListener(e -> {
-            this.empleado = this.empleado.get
-        });
 
         btnCargar.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -58,10 +55,10 @@ public class Vista {
                     listaempleados.leerArchivo(chooser.getSelectedFile().getAbsolutePath());
                     listModel.clear();
                     while (!listaempleados.isLast()) {
-                        listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+                        listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
                         listaempleados.goNext();
                     }
-                    listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+                    listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
                     jl_lista.setModel(listModel);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -119,11 +116,11 @@ public class Vista {
         }
         listaempleados.goFirst();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
-            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
         }
         if (!listaempleados.isEmpty())
-            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
 
         jl_lista = new JList<>(listModel);
         scrollPane = new JScrollPane(jl_lista);
@@ -134,7 +131,28 @@ public class Vista {
     }
 
     public void rellenarCampos() {
+        txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
+        txtfCargo.setText(this.nodo_actual.getMain().getTipo());
         txtfNombre.setText(this.nodo_actual.getMain().getNombre());
+        txtfSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo()));
+        txtfMaxSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo_max()));
+        txtfFecha.setText(this.nodo_actual.getMain().getsdfFecha(this.nodo_actual.getMain().getFecha_alta()));
+        if (this.nodo_actual.getMain() instanceof Programador){
+            txtfCargo.setText("Programador");
+            lblOpcion1.setText("Sueldo Extra Mensual");
+            txtfOpcion1.setText(String.valueOf(((Programador) this.nodo_actual.getMain()).getSueldo_extra_mensual()));
+            lblOpcion2.setText("Lenguaje Principal");
+            txtfOpcion2.setText(((Programador) this.nodo_actual.getMain()).getLenguaje_principal());
+        }
+        else {
+            txtfCargo.setText("Analista");
+            lblOpcion1.setText("Plus Anual");
+            txtfOpcion1.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getPlus_anual()));
+            lblOpcion2.setText("Años de experiencia");
+            txtfOpcion2.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getAnios_experiencia()));
+        }
+
+
     }
 }
 
