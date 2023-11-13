@@ -12,8 +12,12 @@ public class Programador extends Empleado {
         this.lenguaje_principal = lenguaje_principal;
     }
 
+    public String getTipo() {
+        return "PROGRAMADOR";
+    }
+
     @Override
     public String toString() {
-        return super.toString() + ", sueldo_extra_mensual: " + sueldo_extra_mensual + ", lenguaje_principal: " + lenguaje_principal + " PROGRAMADOR";
+        return "PROGRAMADOR: " + super.toString() + ", Suelda extra mensual: " + sueldo_extra_mensual + ", Lenguaje principal: " + lenguaje_principal + " PROGRAMADOR";
     }
 }

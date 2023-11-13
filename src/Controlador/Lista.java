@@ -6,6 +6,8 @@ import usarExcepciones.SueldoSuperiorAMaximo;
 
 import javax.imageio.IIOException;
 import java.io.*;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 
 public class Lista {

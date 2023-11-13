@@ -12,10 +12,12 @@ public class Analista extends Empleado {
         this.anios_experiencia = anios_experiencia;
     }
 
-    @Override
-    public String toString() {
-        return super.toString()+", plus_anual: "+plus_anual+", anios_experiencia: "+anios_experiencia+" ANALISTA";
+    public String getTipo() {
+        return "Analista";
     }
 
-    // TODO
+    @Override
+    public String toString() {
+        return "ANALISTA: "+super.toString()+", Plus Anual: "+plus_anual+", Años de Experiencia: "+anios_experiencia;
+    }
 }

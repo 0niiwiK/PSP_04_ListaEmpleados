@@ -53,6 +53,6 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "num_empleado: " + num_empleado + ", nombre: " + nombre + ", sueldo: " + sueldo + ", sueldo_max: " + sueldo_max;
+        return "Número de Empleado: " + num_empleado + ", Nombre: " + nombre + ", Sueldo: " + sueldo + ", Sueldo Máximo: " + sueldo_max;
     }
 }
