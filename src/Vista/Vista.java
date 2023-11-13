@@ -59,7 +59,7 @@ public class Vista {
                 jl_lista.setSelectedIndex(nodo_actual.getIndice());
                 rellenarCampos();
             }
-        })
+        });
 
         btnCargar.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -171,7 +171,7 @@ public class Vista {
 
         btnSiguiente.setEnabled(!nodo_actual.isLast());
         btnAnterior.setEnabled(!nodo_actual.isFirst());
-        if (Objects.equals(nodo_actual.getMain().getTipo(), "Programador")) {
+        if (nodo_actual.getMain().getTipo().equals("Programador")) {
             lblOpcion1.setText("Sueldo extra mensual");
             lblOpcion2.setText("Lenguaje principal");
         } else {
