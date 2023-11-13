@@ -146,6 +146,7 @@ public class Vista {
     }
 
     public void rellenarCampos() {
+        txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
         txtfNombre.setText(this.nodo_actual.getMain().getNombre());
         txtfSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo()));
         txtfMaxSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo_max()));

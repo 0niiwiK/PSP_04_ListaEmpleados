@@ -10,6 +10,7 @@ public class Analista extends Empleado {
         super(num_empleado, nombre, sueldo, sueldo_max);
         this.plus_anual = plus_anual;
         this.anios_experiencia = anios_experiencia;
+
     }
 
     public double getPlus_anual() {

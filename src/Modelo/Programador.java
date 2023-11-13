@@ -10,6 +10,13 @@ public class Programador extends Empleado {
         super(num_empleado, nombre, sueldo, sueldo_max);
         this.sueldo_extra_mensual = sueldo_extra_mensual;
         this.lenguaje_principal = lenguaje_principal;
+        
+    }
+    
+
+    @Override
+    public String getTipo() {
+        return "Programador";
     }
 
     public double getSueldo_extra_mensual() {
@@ -26,11 +33,6 @@ public class Programador extends Empleado {
 
     public void setLenguaje_principal(String lenguaje_principal) {
         this.lenguaje_principal = lenguaje_principal;
-    }
-
-    @Override
-    public String getTipo() {
-        return "Programador";
     }
 
     @Override
