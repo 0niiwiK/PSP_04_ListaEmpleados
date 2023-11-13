@@ -45,6 +45,21 @@ public class Vista {
     Lista.Node nodo_actual;
 
     public Vista() {
+        btnSiguiente.addActionListener(e -> {
+            if (!nodo_actual.isLast()) {
+                setNodo_actual(nodo_actual.getNextNode());
+                jl_lista.setSelectedIndex(nodo_actual.getIndice());
+                rellenarCampos();
+            }
+        });
+
+        btnAnterior.addActionListener(e -> {
+            if (!nodo_actual.isFirst()) {
+                setNodo_actual(nodo_actual.getPrevNode());
+                jl_lista.setSelectedIndex(nodo_actual.getIndice());
+                rellenarCampos();
+            }
+        })
 
         btnCargar.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -55,10 +70,10 @@ public class Vista {
                     listaempleados.leerArchivo(chooser.getSelectedFile().getAbsolutePath());
                     listModel.clear();
                     while (!listaempleados.isLast()) {
-                        listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+                        listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
                         listaempleados.goNext();
                     }
-                    listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+                    listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
                     jl_lista.setModel(listModel);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -116,11 +131,11 @@ public class Vista {
         }
         listaempleados.goFirst();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
-            listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
         }
         if (!listaempleados.isEmpty())
-            listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
 
         jl_lista = new JList<>(listModel);
         scrollPane = new JScrollPane(jl_lista);
@@ -131,8 +146,6 @@ public class Vista {
     }
 
     public void rellenarCampos() {
-        txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
-        txtfCargo.setText(this.nodo_actual.getMain().getTipo());
         txtfNombre.setText(this.nodo_actual.getMain().getNombre());
         txtfSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo()));
         txtfMaxSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo_max()));
@@ -153,6 +166,18 @@ public class Vista {
         }
 
 
+
+        // TODO
+
+        btnSiguiente.setEnabled(!nodo_actual.isLast());
+        btnAnterior.setEnabled(!nodo_actual.isFirst());
+        if (Objects.equals(nodo_actual.getMain().getTipo(), "Programador")) {
+            lblOpcion1.setText("Sueldo extra mensual");
+            lblOpcion2.setText("Lenguaje principal");
+        } else {
+            lblOpcion1.setText("Plus anual");
+            lblOpcion2.setText("Años de experiencia");
+        }
     }
 }
 
