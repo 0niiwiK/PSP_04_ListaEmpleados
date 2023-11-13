@@ -7,10 +7,6 @@ import Modelo.Empleado;
 import Modelo.Programador;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.FileChooserUI;
-import java.io.File;
 
 public class Vista {
     private JPanel panel1;
@@ -46,8 +42,13 @@ public class Vista {
     private JLabel txtCalculo;
     private DefaultListModel<String> listModel;
     Lista listaempleados;
+    Lista.Node nodo_actual;
 
     public Vista() {
+        btnSiguiente.addActionListener(e -> {
+            this.empleado = this.empleado.get
+        });
+
         btnCargar.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -71,7 +72,9 @@ public class Vista {
         jl_lista.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 JList list = (JList) e.getSource();
-                txtfNombre.setText(listaempleados.getEmpleadoAt(list.getSelectedIndex()).getMain().getNombre());
+                setNodo_actual(listaempleados.getEmpleadoAt(list.getSelectedIndex()));
+                rellenarCampos();
+
             }
         });
 
@@ -124,6 +127,14 @@ public class Vista {
 
         jl_lista = new JList<>(listModel);
         scrollPane = new JScrollPane(jl_lista);
+    }
+
+    public void setNodo_actual(Lista.Node nodo) {
+        this.nodo_actual = nodo;
+    }
+
+    public void rellenarCampos() {
+        txtfNombre.setText(this.nodo_actual.getMain().getNombre());
     }
 }
 
