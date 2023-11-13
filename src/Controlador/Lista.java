@@ -4,16 +4,14 @@ import Modelo.*;
 import usarExcepciones.EmpleadoNoEncontrado;
 import usarExcepciones.SueldoSuperiorAMaximo;
 
-import javax.imageio.IIOException;
 import java.io.*;
-import java.util.Iterator;
-import java.util.function.Consumer;
 
 
 public class Lista {
     static int counter = 0;
 
     public static class Node {
+        int numEmp;
         int indice;
         Empleado main;
         Node nextNode;
@@ -21,7 +19,8 @@ public class Lista {
 
         public Node(Empleado em) {
             main = em;
-            this.indice = main.getNum_empleado();
+            this.numEmp = main.getNum_empleado();
+            this.indice = counter;
         }
 
         public Node getNextNode() {
@@ -41,7 +40,7 @@ public class Lista {
         }
 
         public int getNumEmp() {
-            return this.indice;
+            return this.numEmp;
         }
 
         @Override
@@ -51,6 +50,18 @@ public class Lista {
 
         public Empleado getMain() {
             return main;
+        }
+
+        public boolean isLast() {
+            return nextNode == null;
+        }
+
+        public boolean isFirst() {
+            return prevNode == null;
+        }
+
+        public int getIndice() {
+            return indice;
         }
     }
 
@@ -69,12 +80,10 @@ public class Lista {
             temp.setPrevNode(null);
             firstNode = temp;
             lastNode = temp;
-            counter = 1;
         } else {
             lastNode.setNextNode(temp);
             temp.setPrevNode(lastNode);
             lastNode = temp;
-            counter++;
         }
         act = temp;
     }
@@ -207,11 +216,11 @@ public class Lista {
         else {
             Node nod1 = goNumEmp(numEmp1);
             Node nod2 = goNumEmp(numEmp2);
-            int nod1_index = nod1.indice;
+            int nod1_index = nod1.numEmp;
             Empleado nod1_emp = nod1.main;
-            nod1.indice = nod2.indice;
+            nod1.numEmp = nod2.numEmp;
             nod1.main = nod2.main;
-            nod2.indice = nod1_index;
+            nod2.numEmp = nod1_index;
             nod2.main = nod1_emp;
         }
     }
@@ -227,9 +236,9 @@ public class Lista {
             Node lastNode = null;
             while (actual != lastNode && actual.nextNode != null) {
                 siguiente = actual.nextNode;
-                if (actual.indice > siguiente.indice) {
+                if (actual.numEmp > siguiente.numEmp) {
                     try {
-                        intercambiar(actual.indice, siguiente.indice);
+                        intercambiar(actual.numEmp, siguiente.numEmp);
                     } catch (EmpleadoNoEncontrado e) {
                         throw new RuntimeException(e);
                     }

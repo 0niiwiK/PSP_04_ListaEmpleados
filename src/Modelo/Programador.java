@@ -14,7 +14,7 @@ public class Programador extends Empleado {
 
     @Override
     public String getTipo() {
-        return "PROGRAMADOR";
+        return "Programador";
     }
 
     @Override

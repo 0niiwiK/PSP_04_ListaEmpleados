@@ -7,6 +7,7 @@ import Modelo.Empleado;
 import Modelo.Programador;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class Vista {
     private JPanel panel1;
@@ -46,8 +47,20 @@ public class Vista {
 
     public Vista() {
         btnSiguiente.addActionListener(e -> {
-            this.empleado = this.empleado.get
+            if (!nodo_actual.isLast()) {
+                setNodo_actual(nodo_actual.getNextNode());
+                jl_lista.setSelectedIndex(nodo_actual.getIndice());
+                rellenarCampos();
+            }
         });
+
+        btnAnterior.addActionListener(e -> {
+            if (!nodo_actual.isFirst()) {
+                setNodo_actual(nodo_actual.getPrevNode());
+                jl_lista.setSelectedIndex(nodo_actual.getIndice());
+                rellenarCampos();
+            }
+        })
 
         btnCargar.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -74,7 +87,6 @@ public class Vista {
                 JList list = (JList) e.getSource();
                 setNodo_actual(listaempleados.getEmpleadoAt(list.getSelectedIndex()));
                 rellenarCampos();
-
             }
         });
 
@@ -135,6 +147,18 @@ public class Vista {
 
     public void rellenarCampos() {
         txtfNombre.setText(this.nodo_actual.getMain().getNombre());
+
+        // TODO
+
+        btnSiguiente.setEnabled(!nodo_actual.isLast());
+        btnAnterior.setEnabled(!nodo_actual.isFirst());
+        if (Objects.equals(nodo_actual.getMain().getTipo(), "Programador")) {
+            lblOpcion1.setText("Sueldo extra mensual");
+            lblOpcion2.setText("Lenguaje principal");
+        } else {
+            lblOpcion1.setText("Plus anual");
+            lblOpcion2.setText("Años de experiencia");
+        }
     }
 }
 
