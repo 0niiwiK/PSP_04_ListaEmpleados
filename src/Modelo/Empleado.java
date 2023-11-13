@@ -40,6 +40,22 @@ public class Empleado implements Serializable {
             this.sueldo = sueldo;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public GregorianCalendar getFecha_alta() {
+        return fecha_alta;
+    }
+
+    public void setFecha_alta(GregorianCalendar fecha_alta) {
+        this.fecha_alta = fecha_alta;
+    }
+
     public float getSueldo_max() {
         return sueldo_max;
     }

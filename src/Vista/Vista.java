@@ -71,7 +71,7 @@ public class Vista {
         jl_lista.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 JList list = (JList) e.getSource();
-                System.out.println(list.getSelectedIndex());
+                txtfNombre.setText(listaempleados.getEmpleadoAt(list.getSelectedIndex()).getMain().getNombre());
             }
         });
 
