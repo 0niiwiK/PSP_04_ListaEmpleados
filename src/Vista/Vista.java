@@ -2,11 +2,7 @@ package Vista;
 
 import Controlador.Lista;
 
-import Modelo.Empleado;
-
 import javax.swing.*;
-import javax.swing.plaf.FileChooserUI;
-import java.io.File;
 
 public class Vista {
     private JPanel panel1;
@@ -14,6 +10,7 @@ public class Vista {
     JScrollPane scrollPane;
     private JButton btnCargar;
     private JButton btnGuardar;
+    private JButton btnCrear;
     private DefaultListModel<String> listModel;
     Lista listaempleados;
 
@@ -38,6 +35,18 @@ public class Vista {
             }
         });
 
+        btnGuardar.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.setDialogTitle("Selecciona el archivo a guardar");
+            if (chooser.showSaveDialog(panel1) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    listaempleados.escribirArchivo(chooser.getSelectedFile().getAbsolutePath());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
 
