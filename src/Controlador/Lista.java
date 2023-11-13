@@ -45,7 +45,7 @@ public class Lista {
 
         @Override
         public String toString() {
-            return "" + main.toString();
+            return "INDICE: " + indice + " " + main.toString();
         }
 
         public Empleado getMain() {
@@ -315,18 +315,20 @@ public class Lista {
     public void crearAleatoriosCienMil() throws SueldoSuperiorAMaximo {
         int numero = ((int) (Math.random() * 98001 )) + 2001;
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 1000; i++) {
             int op = (int) (Math.random() * 2);
 
             while (existe(numero)) {
                 numero = ((int) (Math.random() * 98001 )) + 2001;
             }
 
+            int sueldo = ((int) (Math.random() * 1001 )) + 1500;
+
             if (op == 0) {
-                Analista aux = new Analista(numero, "Juan", 2000, 2500, 0, 0);
+                Analista aux = new Analista(numero, "Juan", sueldo, 3000, 0, 0);
                 add(aux);
             } else {
-                Programador aux = new Programador(numero, "Pedro", 2000, 2500, 0, "Java");
+                Programador aux = new Programador(numero, "Pedro", sueldo, 3000, 0, "Java");
                 add(aux);
             }
         }

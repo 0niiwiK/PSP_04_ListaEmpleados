@@ -45,10 +45,23 @@ public class Vista {
     Lista.Node nodo_actual;
 
     public Vista() {
+        btnSiguiente.setEnabled(false);
+        btnAnterior.setEnabled(false);
+
+        btnCreaMass.addActionListener(e -> {
+            try {
+                listaempleados.crearAleatoriosCienMil();
+                cargarLista();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         btnSiguiente.addActionListener(e -> {
             if (!nodo_actual.isLast()) {
                 setNodo_actual(nodo_actual.getNextNode());
-                jl_lista.setSelectedIndex(nodo_actual.getIndice());
+                int indice  = nodo_actual.getIndice();
+                jl_lista.setSelectedValue( nodo_actual.getNumEmp() + " " + nodo_actual.getMain().getTipo(), true);
                 rellenarCampos();
             }
         });
@@ -129,7 +142,12 @@ public class Vista {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        cargarLista();
+    }
+
+    public void cargarLista() {
         listaempleados.goFirst();
+        listModel.clear();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
             listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
@@ -146,6 +164,7 @@ public class Vista {
     }
 
     public void rellenarCampos() {
+        System.out.println(nodo_actual);
         txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
         txtfNombre.setText(this.nodo_actual.getMain().getNombre());
         txtfSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo()));
