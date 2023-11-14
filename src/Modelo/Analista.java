@@ -13,6 +13,14 @@ public class Analista extends Empleado {
 
     }
 
+    @Override
+    public void calcularSueldo() throws SueldoSuperiorAMaximo {
+        if (this.sueldo+this.plus_anual > this.sueldo_max)
+            throw new SueldoSuperiorAMaximo();
+        else
+            this.sueldo = this.sueldo + this.plus_anual;
+    }
+
     public double getPlus_anual() {
         return plus_anual;
     }

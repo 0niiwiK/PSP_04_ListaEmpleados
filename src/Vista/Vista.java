@@ -3,10 +3,13 @@ package Vista;
 import Controlador.Lista;
 
 import Modelo.Analista;
+import Modelo.ComparaFechas;
 import Modelo.Empleado;
 import Modelo.Programador;
+import usarExcepciones.SueldoSuperiorAMaximo;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 
 public class Vista {
     private JPanel panel1;
@@ -43,10 +46,25 @@ public class Vista {
     private DefaultListModel<String> listModel;
     Lista listaempleados;
     Lista.Node nodo_actual;
+    ComparaFechas comparaFechas;
+    ListSelectionListener lSL;
 
     public Vista() {
-        btnSiguiente.setEnabled(false);
-        btnAnterior.setEnabled(false);
+
+        btnCalcular.addActionListener(e -> {
+            try {
+                nodo_actual.getMain().calcularSueldo();
+                JOptionPane.showMessageDialog(null,
+                        "Salario modificado correctamente.\nNuevo sueldo: " + nodo_actual.getMain().getSueldo(),
+                        "Salario modificado",JOptionPane.INFORMATION_MESSAGE);
+                cargarLista();
+            } catch (SueldoSuperiorAMaximo ex) {
+                JOptionPane.showMessageDialog(null,
+                        "El salario quedaría por encima del maximo.\nNo se puede modificar.",
+                        "Salario superior al maximo.",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         btnCreaMass.addActionListener(e -> {
             try {
@@ -60,10 +78,28 @@ public class Vista {
         btnSiguiente.addActionListener(e -> {
             if (!nodo_actual.isLast()) {
                 setNodo_actual(nodo_actual.getNextNode());
-                int indice  = nodo_actual.getIndice();
                 jl_lista.setSelectedValue( nodo_actual.getNumEmp() + " " + nodo_actual.getMain().getTipo(), true);
                 rellenarCampos();
             }
+        });
+
+        btnPrimero.addActionListener(e -> {
+            setNodo_actual(listaempleados.getFirstNode());
+            jl_lista.setSelectedIndex(nodo_actual.getIndice());
+            rellenarCampos();
+        });
+
+        btnUltimo.addActionListener(e -> {
+            setNodo_actual(listaempleados.getLastNode());
+            jl_lista.setSelectedIndex(nodo_actual.getIndice());
+            rellenarCampos();
+        });
+
+        btnOrdenar.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null,
+                    "Tiempo de ordenamiento: " + listaempleados.sort() + " ms",
+                    "Tiempo de ordenamiento",JOptionPane.INFORMATION_MESSAGE);
+            cargarLista();
         });
 
         btnAnterior.addActionListener(e -> {
@@ -99,7 +135,6 @@ public class Vista {
                 JList list = (JList) e.getSource();
                 setNodo_actual(listaempleados.getEmpleadoAt(list.getSelectedIndex()));
                 rellenarCampos();
-
             }
         });
 
@@ -133,12 +168,11 @@ public class Vista {
     }
 
     private void createUIComponents() {
+        comparaFechas = new ComparaFechas();
         listaempleados = new Lista();
         listModel = new DefaultListModel<>();
         try {
-            listaempleados.add(new Programador(1, "Pedro", 2000, 2500, 0, "Java"));
-            listaempleados.add(new Programador(2, "Juan", 2200, 2600, 0, "Python"));
-            listaempleados.add(new Analista(3, "Carla", 3000, 3200, 0, 0));
+            listaempleados.add(new Analista(0,null,0,0,0,0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -149,7 +183,7 @@ public class Vista {
         listaempleados.goFirst();
         listModel.clear();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
-            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement( listaempleados.getAct().getMain().getNum_empleado() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
         }
         if (!listaempleados.isEmpty())
@@ -164,6 +198,16 @@ public class Vista {
     }
 
     public void rellenarCampos() {
+        if (nodo_actual != null && nodo_actual.isFirst()) {
+            btnCreaMass.setEnabled(false);
+            btnCalcular.setEnabled(false);
+            btnOrdenar.setEnabled(false);
+        } else {
+            btnCreaMass.setEnabled(true);
+            btnCalcular.setEnabled(true);
+            btnOrdenar.setEnabled(true);
+        }
+
         System.out.println(nodo_actual);
         txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
         txtfNombre.setText(this.nodo_actual.getMain().getNombre());
@@ -176,6 +220,8 @@ public class Vista {
             txtfOpcion1.setText(String.valueOf(((Programador) this.nodo_actual.getMain()).getSueldo_extra_mensual()));
             lblOpcion2.setText("Lenguaje Principal");
             txtfOpcion2.setText(((Programador) this.nodo_actual.getMain()).getLenguaje_principal());
+            if (!nodo_actual.isFirst())
+                btnCalcular.setEnabled(comparaFechas.cumpleMes(this.nodo_actual.getMain().getFecha_alta()));
         }
         else {
             txtfCargo.setText("Analista");
@@ -183,11 +229,10 @@ public class Vista {
             txtfOpcion1.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getPlus_anual()));
             lblOpcion2.setText("Años de experiencia");
             txtfOpcion2.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getAnios_experiencia()));
+            if (!nodo_actual.isFirst())
+                btnCalcular.setEnabled(comparaFechas.cumpleAnios(this.nodo_actual.getMain().getFecha_alta()));
+
         }
-
-
-
-        // TODO
 
         btnSiguiente.setEnabled(!nodo_actual.isLast());
         btnAnterior.setEnabled(!nodo_actual.isFirst());

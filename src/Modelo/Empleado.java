@@ -11,7 +11,7 @@ public class Empleado implements Serializable {
     private static String SUELDO_EXCEPTION = "SUELDO_SUPERIOR_MAXIMO";
     int num_empleado;
     transient String nombre;
-    float sueldo;
+    double sueldo;
     float sueldo_max;
     GregorianCalendar fecha_alta;
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -52,12 +52,12 @@ public class Empleado implements Serializable {
         return num_empleado;
     }
 
-    public float getSueldo() {
+    public double getSueldo() {
 
         return sueldo;
     }
 
-    public void setSueldo(float sueldo) throws SueldoSuperiorAMaximo {
+    public void setSueldo(double sueldo) throws SueldoSuperiorAMaximo {
         this.sueldo = sueldo;
         if (sueldo > this.sueldo_max)
             throw new SueldoSuperiorAMaximo();
@@ -107,5 +107,8 @@ public class Empleado implements Serializable {
     @Override
     public String toString() {
         return "Número de Empleado: " + num_empleado + ", Nombre: " + nombre + ", Sueldo: " + sueldo + ", Sueldo Máximo: " + sueldo_max;
+    }
+
+    public void calcularSueldo() throws SueldoSuperiorAMaximo {
     }
 }

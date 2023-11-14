@@ -225,7 +225,7 @@ public class Lista {
         }
     }
 
-    public void sort() {
+    public int sort() {
         Node actual;
         Node siguiente;
         boolean intercambio;
@@ -248,7 +248,15 @@ public class Lista {
             }
         } while (intercambio);
         long endTime = System.nanoTime();
-        System.out.println("Tiempo ordenación: " + (endTime - startTime) / 1000000 + " ms");
+        goFirst();
+        int i = 0;
+        while (i < 99 && !isLast()) {
+            System.out.println(getAct());
+            goNext();
+            i++;
+        }
+        System.out.println(getAct());
+        return (int) ((endTime - startTime) / 1000000);
     }
 
     public void escribirArchivo(String ruta) {
@@ -318,9 +326,12 @@ public class Lista {
         for (int i = 0; i < 1000; i++) {
             int op = (int) (Math.random() * 2);
 
-            while (existe(numero)) {
+            if (isEmpty())
                 numero = ((int) (Math.random() * 98001 )) + 2001;
-            }
+            else
+                while (existe(numero)) {
+                numero = ((int) (Math.random() * 98001 )) + 2001;
+                }
 
             int sueldo = ((int) (Math.random() * 1001 )) + 1500;
 

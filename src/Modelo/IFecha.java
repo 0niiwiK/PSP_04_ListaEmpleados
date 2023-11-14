@@ -12,9 +12,9 @@ public interface IFecha {
     public abstract int mes();
     public abstract int anio();
 
-    boolean cumpleMes();
+    boolean cumpleMes(GregorianCalendar fecha);
 
-    boolean cumpleAnios();
+    boolean cumpleAnios(GregorianCalendar fecha);
 
 
 }

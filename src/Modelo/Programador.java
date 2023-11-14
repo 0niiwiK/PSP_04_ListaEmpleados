@@ -12,7 +12,14 @@ public class Programador extends Empleado {
         this.lenguaje_principal = lenguaje_principal;
         
     }
-    
+
+    @Override
+    public void calcularSueldo() throws SueldoSuperiorAMaximo {
+        if (this.sueldo+this.sueldo_extra_mensual > this.sueldo_max)
+            throw new SueldoSuperiorAMaximo();
+        else
+            this.sueldo = this.sueldo + this.sueldo_extra_mensual;
+    }
 
     @Override
     public String getTipo() {
@@ -37,6 +44,6 @@ public class Programador extends Empleado {
 
     @Override
     public String toString() {
-        return "PROGRAMADOR: " + super.toString() + ", Suelda extra mensual: " + sueldo_extra_mensual + ", Lenguaje principal: " + lenguaje_principal + " PROGRAMADOR";
+        return "PROGRAMADOR: " + super.toString() + ", Suelda extra mensual: " + sueldo_extra_mensual + ", Lenguaje principal: " + lenguaje_principal;
     }
 }
