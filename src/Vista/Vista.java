@@ -10,6 +10,11 @@ import usarExcepciones.SueldoSuperiorAMaximo;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class Vista {
     private JPanel panel1;
@@ -43,6 +48,7 @@ public class Vista {
     private JButton btnSiguiente;
     private JButton btnCalcular;
     private JLabel txtCalculo;
+    private JPanel panelPrincipal;
     private DefaultListModel<String> listModel;
     Lista listaempleados;
     Lista.Node nodo_actual;
@@ -53,6 +59,17 @@ public class Vista {
 
         btnCalcular.setEnabled(false);
         btnOrdenar.setEnabled(false);
+
+        jl_lista.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    btnSiguiente.doClick();
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    btnAnterior.doClick();
+                }
+            }
+        });
 
         btnCalcular.addActionListener(e -> {
             try {
