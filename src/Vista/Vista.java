@@ -51,6 +51,9 @@ public class Vista {
 
     public Vista() {
 
+        btnCalcular.setEnabled(false);
+        btnOrdenar.setEnabled(false);
+
         btnCalcular.addActionListener(e -> {
             try {
                 nodo_actual.getMain().calcularSueldo();
@@ -64,6 +67,7 @@ public class Vista {
                         "Salario superior al maximo.",
                         JOptionPane.ERROR_MESSAGE);
             }
+            jl_lista.setSelectedIndex(0);
         });
 
         btnCreaMass.addActionListener(e -> {
@@ -73,6 +77,7 @@ public class Vista {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            jl_lista.setSelectedIndex(0);
         });
 
         btnSiguiente.addActionListener(e -> {
@@ -100,6 +105,7 @@ public class Vista {
                     "Tiempo de ordenamiento: " + listaempleados.sort() + " ms",
                     "Tiempo de ordenamiento",JOptionPane.INFORMATION_MESSAGE);
             cargarLista();
+            jl_lista.setSelectedIndex(0);
         });
 
         btnAnterior.addActionListener(e -> {
@@ -128,10 +134,11 @@ public class Vista {
                     ex.printStackTrace();
                 }
             }
+            jl_lista.setSelectedIndex(0);
         });
 
         jl_lista.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
+            if (!e.getValueIsAdjusting() && !jl_lista.isSelectionEmpty()) {
                 JList list = (JList) e.getSource();
                 setNodo_actual(listaempleados.getEmpleadoAt(list.getSelectedIndex()));
                 rellenarCampos();
@@ -142,6 +149,7 @@ public class Vista {
             Empleados dialog = new Empleados(listaempleados);
             dialog.pack();
             dialog.setVisible(true);
+            jl_lista.setSelectedIndex(listaempleados.getCounter() - 1);
         });
 
         btnGuardar.addActionListener(e -> {
@@ -172,6 +180,7 @@ public class Vista {
         listaempleados = new Lista();
         listModel = new DefaultListModel<>();
         try {
+            listaempleados.add(new Analista(1,null,0,0,0,0));
             listaempleados.add(new Analista(0,null,0,0,0,0));
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,8 +189,11 @@ public class Vista {
     }
 
     public void cargarLista() {
-        listaempleados.goFirst();
         listModel.clear();
+        if (jl_lista != null)
+            jl_lista.clearSelection();
+        jl_lista = new JList<>(listModel);
+        listaempleados.goFirst();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
             listModel.addElement( listaempleados.getAct().getMain().getNum_empleado() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
@@ -198,50 +210,45 @@ public class Vista {
     }
 
     public void rellenarCampos() {
-        if (nodo_actual != null && nodo_actual.isFirst()) {
-            btnCreaMass.setEnabled(false);
-            btnCalcular.setEnabled(false);
-            btnOrdenar.setEnabled(false);
-        } else {
+        if (nodo_actual != null) {
             btnCreaMass.setEnabled(true);
             btnCalcular.setEnabled(true);
             btnOrdenar.setEnabled(true);
-        }
 
-        System.out.println(nodo_actual);
-        txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
-        txtfNombre.setText(this.nodo_actual.getMain().getNombre());
-        txtfSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo()));
-        txtfMaxSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo_max()));
-        txtfFecha.setText(this.nodo_actual.getMain().getsdfFecha(this.nodo_actual.getMain().getFecha_alta()));
-        if (this.nodo_actual.getMain() instanceof Programador){
-            txtfCargo.setText("Programador");
-            lblOpcion1.setText("Sueldo Extra Mensual");
-            txtfOpcion1.setText(String.valueOf(((Programador) this.nodo_actual.getMain()).getSueldo_extra_mensual()));
-            lblOpcion2.setText("Lenguaje Principal");
-            txtfOpcion2.setText(((Programador) this.nodo_actual.getMain()).getLenguaje_principal());
-            if (!nodo_actual.isFirst())
-                btnCalcular.setEnabled(comparaFechas.cumpleMes(this.nodo_actual.getMain().getFecha_alta()));
-        }
-        else {
-            txtfCargo.setText("Analista");
-            lblOpcion1.setText("Plus Anual");
-            txtfOpcion1.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getPlus_anual()));
-            lblOpcion2.setText("Años de experiencia");
-            txtfOpcion2.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getAnios_experiencia()));
-            if (!nodo_actual.isFirst())
-                btnCalcular.setEnabled(comparaFechas.cumpleAnios(this.nodo_actual.getMain().getFecha_alta()));
+            System.out.println(nodo_actual);
+            txtfNumero.setText(String.valueOf(this.nodo_actual.getMain().getNum_empleado()));
+            txtfNombre.setText(this.nodo_actual.getMain().getNombre());
+            txtfSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo()));
+            txtfMaxSueldo.setText(String.valueOf(this.nodo_actual.getMain().getSueldo_max()));
+            txtfFecha.setText(this.nodo_actual.getMain().getsdfFecha(this.nodo_actual.getMain().getFecha_alta()));
+            if (this.nodo_actual.getMain() instanceof Programador) {
+                txtfCargo.setText("Programador");
+                lblOpcion1.setText("Sueldo Extra Mensual");
+                txtfOpcion1.setText(String.valueOf(((Programador) this.nodo_actual.getMain()).getSueldo_extra_mensual()));
+                lblOpcion2.setText("Lenguaje Principal");
+                txtfOpcion2.setText(((Programador) this.nodo_actual.getMain()).getLenguaje_principal());
+                if (!nodo_actual.isFirst())
+                    btnCalcular.setEnabled(comparaFechas.cumpleMes(this.nodo_actual.getMain().getFecha_alta()));
+            } else {
+                txtfCargo.setText("Analista");
+                lblOpcion1.setText("Plus Anual");
+                txtfOpcion1.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getPlus_anual()));
+                lblOpcion2.setText("Años de experiencia");
+                txtfOpcion2.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getAnios_experiencia()));
+                if (!nodo_actual.isFirst())
+                    btnCalcular.setEnabled(comparaFechas.cumpleAnios(this.nodo_actual.getMain().getFecha_alta()));
 
-        }
+            }
 
-        btnSiguiente.setEnabled(!nodo_actual.isLast());
-        btnAnterior.setEnabled(!nodo_actual.isFirst());
-        if (nodo_actual.getMain().getTipo().equals("Programador")) {
-            lblOpcion1.setText("Sueldo extra mensual");
-            lblOpcion2.setText("Lenguaje principal");
-        } else {
-            lblOpcion1.setText("Plus anual");
-            lblOpcion2.setText("Años de experiencia");
+            btnSiguiente.setEnabled(!nodo_actual.isLast());
+            btnAnterior.setEnabled(!nodo_actual.isFirst());
+            if (nodo_actual.getMain().getTipo().equals("Programador")) {
+                lblOpcion1.setText("Sueldo extra mensual");
+                lblOpcion2.setText("Lenguaje principal");
+            } else {
+                lblOpcion1.setText("Plus anual");
+                lblOpcion2.setText("Años de experiencia");
+            }
         }
     }
 }
