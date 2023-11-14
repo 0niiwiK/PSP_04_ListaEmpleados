@@ -13,6 +13,9 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
@@ -125,11 +128,24 @@ public class Vista {
         });
 
         btnOrdenar.addActionListener(e -> {
+            List<Empleado> lista = new ArrayList<>();
+            listaempleados.goFirst();
+            while (!listaempleados.isLast()) {
+                lista.add(listaempleados.getAct().getMain());
+                listaempleados.goNext();
+            }
+            lista.add(listaempleados.getAct().getMain());
+            long startTime = System.nanoTime();
+            lista.sort(Comparator.comparing(Empleado::getNum_empleado));
+            long endTime = System.nanoTime();
+            int tiempo = (int)((endTime - startTime) / 1000000);
             JOptionPane.showMessageDialog(null,
-                    "Tiempo de ordenamiento: " + listaempleados.sort() + " ms",
+                    "Tiempo de ordenamiento burbuja: " + listaempleados.sort() + " ms\n" +
+                            "Tiempo de ordenamiento coleccion: " + tiempo + " ms",
                     "Tiempo de ordenamiento",JOptionPane.INFORMATION_MESSAGE);
             cargarLista();
             jl_lista.setSelectedIndex(0);
+
         });
 
         btnAnterior.addActionListener(e -> {
