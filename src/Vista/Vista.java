@@ -40,7 +40,6 @@ public class Vista {
     private JLabel lblOpcion1;
     private JLabel lblOpcion2;
     private JButton btnCreaMass;
-    private JButton btnModificar;
     private JButton btnOrdenar;
     private JButton btnPrimero;
     private JButton btnUltimo;
@@ -59,6 +58,14 @@ public class Vista {
 
         btnCalcular.setEnabled(false);
         btnOrdenar.setEnabled(false);
+        txtfNumero.setEditable(false);
+        txtfNombre.setEditable(false);
+        txtfSueldo.setEditable(false);
+        txtfMaxSueldo.setEditable(false);
+        txtfFecha.setEditable(false);
+        txtfCargo.setEditable(false);
+        txtfOpcion1.setEditable(false);
+        txtfOpcion2.setEditable(false);
 
         jl_lista.addKeyListener(new KeyAdapter() {
             @Override
@@ -150,6 +157,7 @@ public class Vista {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                cargarLista();
             }
             jl_lista.setSelectedIndex(0);
         });
@@ -163,9 +171,10 @@ public class Vista {
         });
 
         btnCrear.addActionListener(e -> {
-            Empleados dialog = new Empleados(listaempleados);
+            CreaEmpleado dialog = new CreaEmpleado(listaempleados);
             dialog.pack();
             dialog.setVisible(true);
+            cargarLista();
             jl_lista.setSelectedIndex(listaempleados.getCounter() - 1);
         });
 
