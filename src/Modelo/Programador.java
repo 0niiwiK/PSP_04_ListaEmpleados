@@ -12,6 +12,12 @@ public class Programador extends Empleado {
         this.lenguaje_principal = lenguaje_principal;
         
     }
+    
+    public Programador(int num_empleado, String nombre, float sueldo, String fecha_alta, float sueldo_max, double sueldo_extra_mensual, String lenguaje_principal) throws SueldoSuperiorAMaximo {
+        super(num_empleado, nombre, sueldo, fecha_alta, sueldo_max);
+        this.sueldo_extra_mensual = sueldo_extra_mensual;
+        this.lenguaje_principal = lenguaje_principal;
+    }    
 
     @Override
     public void calcularSueldo() throws SueldoSuperiorAMaximo {

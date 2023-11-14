@@ -10,7 +10,6 @@ public class Analista extends Empleado {
         super(num_empleado, nombre, sueldo, sueldo_max);
         this.plus_anual = plus_anual;
         this.anios_experiencia = anios_experiencia;
-
     }
 
     @Override
@@ -20,6 +19,11 @@ public class Analista extends Empleado {
         else
             this.sueldo = this.sueldo + this.plus_anual;
     }
+    public Analista(int num_empleado, String nombre, float sueldo, String fecha_alta, float sueldo_max, double plus_anual, int anios_experiencia) throws SueldoSuperiorAMaximo {
+        super(num_empleado, nombre, sueldo, fecha_alta, sueldo_max);
+        this.plus_anual = plus_anual;
+        this.anios_experiencia = anios_experiencia;
+    } 
 
     public double getPlus_anual() {
         return plus_anual;
