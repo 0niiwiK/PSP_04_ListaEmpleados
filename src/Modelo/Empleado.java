@@ -1,6 +1,8 @@
 package Modelo;
 
 import usarExcepciones.SueldoSuperiorAMaximo;
+
+import javax.swing.*;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,7 +10,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Empleado implements Serializable {
-    private static String SUELDO_EXCEPTION = "SUELDO_SUPERIOR_MAXIMO";
     int num_empleado;
     transient String nombre;
     double sueldo;
@@ -23,6 +24,7 @@ public class Empleado implements Serializable {
         this.sueldo = sueldo;
         this.sueldo_max = sueldo_max;
         this.fecha_alta = new GregorianCalendar();
+        compruebaSueldos(sueldo);
 
         if (this.sueldo > this.sueldo_max)
             throw new SueldoSuperiorAMaximo();
@@ -33,9 +35,7 @@ public class Empleado implements Serializable {
         this.nombre = nombre;
         this.sueldo = sueldo;
         this.sueldo_max = sueldo_max;
-
-        if (this.sueldo > this.sueldo_max)
-            throw new SueldoSuperiorAMaximo();
+        compruebaSueldos(sueldo);
 
         try {
             Date dateAux = sdf.parse(fecha);
@@ -57,12 +57,8 @@ public class Empleado implements Serializable {
         return sueldo;
     }
 
-    public void setSueldo(double sueldo) throws SueldoSuperiorAMaximo {
+    public void setSueldo(double sueldo){
         this.sueldo = sueldo;
-        if (sueldo > this.sueldo_max)
-            throw new SueldoSuperiorAMaximo();
-        else
-            this.sueldo = sueldo;
     }
     
     public String getNombre() {
@@ -103,7 +99,23 @@ public class Empleado implements Serializable {
     public String getTipo() {
         return "Empleado";
     }
+    
+    private void compruebaSueldos(float sueldo) throws SueldoSuperiorAMaximo {
+        double op1, op2;
 
+        try {
+            op1 = sueldo;
+            op2 = this.sueldo_max;
+        }catch (NumberFormatException ex) {
+            throw new NumberFormatException();
+        }
+
+        if (op1 > op2)
+            throw new SueldoSuperiorAMaximo();
+        else
+            this.sueldo = sueldo;
+    }
+    
     @Override
     public String toString() {
         return "Número de Empleado: " + num_empleado + ", Nombre: " + nombre + ", Sueldo: " + sueldo + ", Sueldo Máximo: " + sueldo_max;

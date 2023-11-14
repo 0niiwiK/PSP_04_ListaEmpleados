@@ -55,34 +55,48 @@ public class CreaEmpleado extends JDialog {
         cbCargo.addActionListener(e -> compruebaComboBox());
 
         btnOk.addActionListener(e -> {
-            num_empleado = Integer.parseInt(txtfNewNumero.getText());
-            nombre = txtfNewNombre.getText();
-            sueldo = Float.parseFloat(txtfNewSueldo.getText());
-            sueldo_max = Float.parseFloat(txtfNewMaxSueldo.getText());
-            fecha_alta = txtfNewFecha.getText();
-            tipo = (String) cbCargo.getSelectedItem();
-            op1 = Double.parseDouble(txtfNewOpcion1.getText());
+            try {
+                num_empleado = Integer.parseInt(txtfNewNumero.getText());
+                nombre = txtfNewNombre.getText();
+                sueldo = Float.parseFloat(txtfNewSueldo.getText());
+                sueldo_max = Float.parseFloat(txtfNewMaxSueldo.getText());
+                fecha_alta = txtfNewFecha.getText();
+                tipo = (String) cbCargo.getSelectedItem();
+                op1 = Double.parseDouble(txtfNewOpcion1.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Algún campo es erroneo", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             if (tipo.equals("Analista")) {
                 try {
                     opA2 = (int) Double.parseDouble(txtfNewOpcion2.getText());
                     if (txtfNewFecha.getText().isEmpty()) {
                         empleado = new Analista(num_empleado, nombre, sueldo, sueldo_max, op1, opA2);
-                    }else {
-                        empleado = new Analista(num_empleado, nombre, sueldo,fecha_alta, sueldo_max, op1, opA2);
+                    } else {
+                        empleado = new Analista(num_empleado, nombre, sueldo, fecha_alta, sueldo_max, op1, opA2);
                     }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Algún campo es erroneo", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 } catch (SueldoSuperiorAMaximo ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             } else if (tipo.equals("Programador")) {
                 try {
                     opP2 = txtfNewOpcion2.getText();
                     if (txtfNewFecha.getText().isEmpty()) {
                         empleado = new Programador(num_empleado, nombre, sueldo, sueldo_max, op1, opP2);
-                    }else {
-                        empleado = new Programador(num_empleado, nombre, sueldo,fecha_alta, sueldo_max, op1, opP2);
+                    } else {
+                        empleado = new Programador(num_empleado, nombre, sueldo, fecha_alta, sueldo_max, op1, opP2);
                     }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Algún campo es erroneo", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 } catch (SueldoSuperiorAMaximo ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
             l.add(empleado);
@@ -109,7 +123,7 @@ public class CreaEmpleado extends JDialog {
         if (tipo.equals("Analista")) {
             lblNewOpcion1.setText("Plus Anual");
             lblNewOpcion2.setText("Años de experiencia");
-        }else if (tipo.equals("Programador")) {
+        } else if (tipo.equals("Programador")) {
             lblNewOpcion1.setText("Sueldo Extra Mensual");
             lblNewOpcion2.setText("Lenguaje Principal");
         }
