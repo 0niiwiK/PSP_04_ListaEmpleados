@@ -49,13 +49,10 @@ public class Vista {
     private JButton btnAnterior;
     private JButton btnSiguiente;
     private JButton btnCalcular;
-    private JLabel txtCalculo;
-    private JPanel panelPrincipal;
     private DefaultListModel<String> listModel;
     Lista listaempleados;
     Lista.Node nodo_actual;
     ComparaFechas comparaFechas;
-    ListSelectionListener lSL;
 
     public Vista() {
 
@@ -94,6 +91,7 @@ public class Vista {
                         "Salario superior al maximo.",
                         JOptionPane.ERROR_MESSAGE);
             }
+            rellenarCampos();
             jl_lista.setSelectedIndex(0);
         });
 
@@ -279,7 +277,6 @@ public class Vista {
                 txtfOpcion2.setText(String.valueOf(((Analista) this.nodo_actual.getMain()).getAnios_experiencia()));
                 if (!nodo_actual.isFirst())
                     btnCalcular.setEnabled(comparaFechas.cumpleAnios(this.nodo_actual.getMain().getFecha_alta()));
-
             }
 
             btnSiguiente.setEnabled(!nodo_actual.isLast());
@@ -294,5 +291,3 @@ public class Vista {
         }
     }
 }
-
-

@@ -2,7 +2,6 @@ package Modelo;
 
 import usarExcepciones.SueldoSuperiorAMaximo;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +40,12 @@ public class Empleado implements Serializable {
             Date dateAux = sdf.parse(fecha);
             GregorianCalendar calendarAux = new GregorianCalendar();
             calendarAux.setTime(dateAux);
+            if ((calendarAux.getTime().getYear() > (new GregorianCalendar().getTime().getYear()))) {
+                throw new RuntimeException(("El año no es valido"));
+            }
+            if ((calendarAux.getTime().getYear() < (new GregorianCalendar().getTime().getYear()-100))){
+                throw new RuntimeException(("El año no es valido"));
+            }
             this.fecha_alta = calendarAux;
         } catch (ParseException e) {
             throw new RuntimeException("la cadena de fecha no tiene el formato adecuado", e);
