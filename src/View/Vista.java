@@ -1,58 +1,54 @@
-package Vista;
+package View;
 
-import Controlador.Lista;
+import Controler.Lista;
 
-import Modelo.Analista;
-import Modelo.ComparaFechas;
-import Modelo.Empleado;
-import Modelo.Programador;
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Model.Analista;
+import Model.ComparaFechas;
+import Model.Empleado;
+import Model.Programador;
+import Exceptions.SueldoSuperiorAMaximo;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-
 public class Vista {
     private JPanel panel1;
+    private Lista listaempleados;
+    private Lista.Node nodo_actual;
     private JList<String> jl_lista;
-    JScrollPane scrollPane;
+    private JScrollPane scrollPane;
+    private ComparaFechas comparaFechas;
+    private DefaultListModel<String> listModel;
     private JButton btnCargar;
     private JButton btnGuardar;
     private JButton btnCrear;
-    private JLabel lblNombre;
-    private JLabel lblNumero;
-    private JLabel lblSueldo;
-    private JLabel lblFecha;
-    private JLabel lblSueldo_max;
-    private JTextField txtfSueldo;
-    private JTextField txtfNombre;
-    private JTextField txtfNumero;
-    private JTextField txtfFecha;
-    private JTextField txtfCargo;
-    private JTextField txtfMaxSueldo;
-    private JLabel lblTipo;
-    private JTextField txtfOpcion1;
-    private JTextField txtfOpcion2;
-    private JLabel lblOpcion1;
-    private JLabel lblOpcion2;
-    private JButton btnCreaMass;
     private JButton btnOrdenar;
     private JButton btnPrimero;
     private JButton btnUltimo;
     private JButton btnAnterior;
     private JButton btnSiguiente;
     private JButton btnCalcular;
-    private DefaultListModel<String> listModel;
-    Lista listaempleados;
-    Lista.Node nodo_actual;
-    ComparaFechas comparaFechas;
+    private JButton btnCreaMass;
+    private JLabel lblNombre;
+    private JLabel lblNumero;
+    private JLabel lblSueldo;
+    private JLabel lblFecha;
+    private JLabel lblSueldo_max;
+    private JLabel lblTipo;
+    private JLabel lblOpcion1;
+    private JLabel lblOpcion2;
+    private JTextField txtfSueldo;
+    private JTextField txtfNombre;
+    private JTextField txtfNumero;
+    private JTextField txtfFecha;
+    private JTextField txtfCargo;
+    private JTextField txtfMaxSueldo;
+    private JTextField txtfOpcion1;
+    private JTextField txtfOpcion2;
 
     public Vista() {
 
@@ -83,7 +79,7 @@ public class Vista {
                 nodo_actual.getMain().calcularSueldo();
                 JOptionPane.showMessageDialog(null,
                         "Salario modificado correctamente.\nNuevo sueldo: " + nodo_actual.getMain().getSueldo(),
-                        "Salario modificado",JOptionPane.INFORMATION_MESSAGE);
+                        "Salario modificado", JOptionPane.INFORMATION_MESSAGE);
                 cargarLista();
             } catch (SueldoSuperiorAMaximo ex) {
                 JOptionPane.showMessageDialog(null,
@@ -108,7 +104,7 @@ public class Vista {
         btnSiguiente.addActionListener(e -> {
             if (!nodo_actual.isLast()) {
                 setNodo_actual(nodo_actual.getNextNode());
-                jl_lista.setSelectedValue( nodo_actual.getNumEmp() + " " + nodo_actual.getMain().getTipo(), true);
+                jl_lista.setSelectedValue(nodo_actual.getNumEmp() + " " + nodo_actual.getMain().getTipo(), true);
                 rellenarCampos();
             }
         });
@@ -136,11 +132,11 @@ public class Vista {
             long startTime = System.nanoTime();
             lista.sort(Comparator.comparing(Empleado::getNum_empleado));
             long endTime = System.nanoTime();
-            int tiempo = (int)((endTime - startTime) / 1000000);
+            int tiempo = (int) ((endTime - startTime) / 1000000);
             JOptionPane.showMessageDialog(null,
                     "Tiempo de ordenamiento burbuja: " + listaempleados.sort() + " ms\n" +
                             "Tiempo de ordenamiento coleccion: " + tiempo + " ms",
-                    "Tiempo de ordenamiento",JOptionPane.INFORMATION_MESSAGE);
+                    "Tiempo de ordenamiento", JOptionPane.INFORMATION_MESSAGE);
             cargarLista();
             jl_lista.setSelectedIndex(0);
 
@@ -163,10 +159,10 @@ public class Vista {
                     listaempleados.leerArchivo(chooser.getSelectedFile().getAbsolutePath());
                     listModel.clear();
                     while (!listaempleados.isLast()) {
-                        listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+                        listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
                         listaempleados.goNext();
                     }
-                    listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+                    listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
                     jl_lista.setModel(listModel);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -187,6 +183,7 @@ public class Vista {
         btnCrear.addActionListener(e -> {
             CreaEmpleado dialog = new CreaEmpleado(listaempleados);
             dialog.pack();
+            dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
             cargarLista();
             jl_lista.setSelectedIndex(listaempleados.getCounter() - 1);
@@ -207,21 +204,13 @@ public class Vista {
     }
 
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Vista");
-        frame.setContentPane(new Vista().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     private void createUIComponents() {
         comparaFechas = new ComparaFechas();
         listaempleados = new Lista();
         listModel = new DefaultListModel<>();
         try {
-            listaempleados.add(new Analista(1,null,0,0,0,0));
-            listaempleados.add(new Analista(0,null,0,0,0,0));
+            listaempleados.add(new Analista(1, null, 0, 0, 0, 0));
+            listaempleados.add(new Analista(0, null, 0, 0, 0, 0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,11 +224,11 @@ public class Vista {
         jl_lista = new JList<>(listModel);
         listaempleados.goFirst();
         while (!listaempleados.isLast() && !listaempleados.isEmpty()) {
-            listModel.addElement( listaempleados.getAct().getMain().getNum_empleado() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement(listaempleados.getAct().getMain().getNum_empleado() + " " + listaempleados.getAct().getMain().getTipo());
             listaempleados.goNext();
         }
         if (!listaempleados.isEmpty())
-            listModel.addElement( listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
+            listModel.addElement(listaempleados.getAct().getNumEmp() + " " + listaempleados.getAct().getMain().getTipo());
 
         jl_lista = new JList<>(listModel);
         scrollPane = new JScrollPane(jl_lista);
@@ -289,5 +278,14 @@ public class Vista {
                 lblOpcion2.setText("Años de experiencia");
             }
         }
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("View");
+        frame.setContentPane(new Vista().panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }

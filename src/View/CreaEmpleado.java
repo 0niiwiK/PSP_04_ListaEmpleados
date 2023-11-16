@@ -1,13 +1,13 @@
-package Vista;
+package View;
 
-import Controlador.Lista;
-import Modelo.Analista;
-import Modelo.Empleado;
-import Modelo.Programador;
+import Controler.Lista;
+import Model.Analista;
+import Model.Empleado;
+import Model.Programador;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Exceptions.SueldoSuperiorAMaximo;
 
 import javax.swing.*;
 import java.awt.*;
