@@ -69,7 +69,13 @@ public class CreaEmpleado extends JDialog {
 
         compruebaComboBox();
         
-
+        cbCargo.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                compruebaComboBox();
+            }
+        });
+        
         btnOk.addActionListener(e -> {
             try {
                 num_empleado = Integer.parseInt(txtfNewNumero.getText());
@@ -129,8 +135,9 @@ public class CreaEmpleado extends JDialog {
             l.add(empleado);
             onOK();
         });
-
+        
         btnCancelar.addActionListener(e -> onCancel());
+        
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -138,8 +145,7 @@ public class CreaEmpleado extends JDialog {
 
     private void compruebaComboBox() {
         tipo = (String) cbCargo.getSelectedItem();
-
-        assert tipo != null;
+        
         if (tipo.equals("Analista")) {
             lblNewOpcion1.setText("Plus Anual");
             lblNewOpcion2.setText("Años de experiencia");
