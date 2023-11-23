@@ -1,4 +1,4 @@
-package usarExcepciones;
+package Exceptions;
 
 public class EmpleadoNoEncontrado extends Exception {
     public EmpleadoNoEncontrado(int numEmp) {

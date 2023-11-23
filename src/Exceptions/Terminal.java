@@ -1,7 +1,7 @@
-package usarExcepciones;
+package Exceptions;
 /*********************************************
  * Jose F. Quesada                           *
- *                Curso de Programación Java *
+ *                Curso de Programaciï¿½n Java *
  * Capitulo02/Terminal.java                  *
  *********************************************/
  
@@ -74,11 +74,11 @@ public class Terminal {
    }
 
    /**
-    * Lee un número entero (int) desde el terminal 
-    * (dispositivo estandar de entrada). El número 
-    * debe finalizar con un salto de línea.
+    * Lee un nï¿½mero entero (int) desde el terminal 
+    * (dispositivo estandar de entrada). El nï¿½mero 
+    * debe finalizar con un salto de lï¿½nea.
     * @param mensaje mensaje que se imprime 
-    * @return el valor numérico leido (como int)
+    * @return el valor numï¿½rico leido (como int)
     * @exception NumberFormatException si se 
     * introduce un valor incorrecto
     */

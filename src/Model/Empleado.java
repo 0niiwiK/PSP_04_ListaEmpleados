@@ -1,6 +1,6 @@
-package Modelo;
+package Model;
 
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Exceptions.SueldoSuperiorAMaximo;
 
 import java.io.Serializable;
 import java.text.ParseException;

@@ -1,7 +1,6 @@
 package View;
 
-import Controler.Lista;
-
+import Controller.Lista;
 import Model.Analista;
 import Model.ComparaFechas;
 import Model.Empleado;
@@ -62,6 +61,10 @@ public class Vista {
         txtfCargo.setEditable(false);
         txtfOpcion1.setEditable(false);
         txtfOpcion2.setEditable(false);
+        btnSiguiente.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnPrimero.setEnabled(false);
+        btnUltimo.setEnabled(false);
 
         jl_lista.addKeyListener(new KeyAdapter() {
             @Override
@@ -208,12 +211,6 @@ public class Vista {
         comparaFechas = new ComparaFechas();
         listaempleados = new Lista();
         listModel = new DefaultListModel<>();
-        try {
-            listaempleados.add(new Analista(1, null, 0, 0, 0, 0));
-            listaempleados.add(new Analista(0, null, 0, 0, 0, 0));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         cargarLista();
     }
 
@@ -232,6 +229,11 @@ public class Vista {
 
         jl_lista = new JList<>(listModel);
         scrollPane = new JScrollPane(jl_lista);
+        if (!listaempleados.isEmpty()) {
+            btnOrdenar.setEnabled(true);
+            btnPrimero.setEnabled(true);
+            btnUltimo.setEnabled(true);
+        }
     }
 
     public void setNodo_actual(Lista.Node nodo) {

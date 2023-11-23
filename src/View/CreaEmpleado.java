@@ -1,17 +1,17 @@
 package View;
 
-import Controler.Lista;
+import Controller.Lista;
+import Exceptions.SueldoSuperiorAMaximo;
 import Model.Analista;
 import Model.Empleado;
 import Model.Programador;
-
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-import Exceptions.SueldoSuperiorAMaximo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 
 

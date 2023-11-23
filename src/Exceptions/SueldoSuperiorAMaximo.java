@@ -1,4 +1,4 @@
-package usarExcepciones;
+package Exceptions;
 
 public class SueldoSuperiorAMaximo extends Exception {
     private String error;

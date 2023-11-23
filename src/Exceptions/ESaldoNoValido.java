@@ -1,4 +1,4 @@
-package usarExcepciones;
+package Exceptions;
 
 public class ESaldoNoValido extends Exception {        
     public ESaldoNoValido() {

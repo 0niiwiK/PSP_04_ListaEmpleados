@@ -1,6 +1,4 @@
-package usarExcepciones;
-
-import java.io.*; 
+package Exceptions;
 
 class BancoSA {
   private static CuentaSA cuenta1, cuenta2, cuenta3;
@@ -67,10 +65,10 @@ class BancoSA {
 
     if (resImp) 
       System.out.println
-        ("Operación finalizada correctamente");
+        ("Operaciï¿½n finalizada correctamente");
     else
       System.out.println
-        ("Operación finalizada erróneamente");
+        ("Operaciï¿½n finalizada errï¿½neamente");
   }
 
   private static void gestionReintegro() {
@@ -89,11 +87,11 @@ class BancoSA {
            cuenta2.Reintegro(cantidad);
         else if (cuenta == 3)
            cuenta3.Reintegro(cantidad);
-        System.out.print("Ha finalizado correctamente la operación de ");
+        System.out.print("Ha finalizado correctamente la operaciï¿½n de ");
     }
     catch (ESaldoNoValido excep){
         System.out.println(excep.getMessage());
-        System.out.print("Ha finalizado erróneamente la operación de ");
+        System.out.print("Ha finalizado errï¿½neamente la operaciï¿½n de ");
     }
     
     // El siguiente catch controla un super tipo de excepciones y
@@ -101,7 +99,7 @@ class BancoSA {
     // (saldo < 0) se controlo en el catch anterior y por tanto anterior. 
     catch (Exception e){  
         System.out.println(e.getMessage());
-        System.out.print("Ha finalizado erróneamente la operación de ");
+        System.out.print("Ha finalizado errï¿½neamente la operaciï¿½n de ");
     }
        
     // finally siempre se ejecutara. Sirve para tareas como cerrar ficheros, etc.

@@ -1,6 +1,6 @@
-package Modelo;
+package Model;
 
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Exceptions.SueldoSuperiorAMaximo;
 
 public class Programador extends Empleado {
     double sueldo_extra_mensual;

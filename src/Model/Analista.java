@@ -1,6 +1,6 @@
-package Modelo;
+package Model;
 
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Exceptions.SueldoSuperiorAMaximo;
 
 public class Analista extends Empleado {
     double plus_anual;

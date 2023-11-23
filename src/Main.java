@@ -1,9 +1,7 @@
-import Controlador.Lista;
-import Modelo.*;
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Controller.Lista;
+import Model.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

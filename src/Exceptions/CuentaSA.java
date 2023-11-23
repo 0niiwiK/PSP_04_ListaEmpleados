@@ -1,10 +1,10 @@
-package usarExcepciones;
+package Exceptions;
 
 /**
  * Esta clase representa estructuras de tipo
  * cuenta bancaria.
  *
- * Cada objeto de esta clase contendrá las
+ * Cada objeto de esta clase contendrï¿½ las
  * siguientes variables:
  * 	- Nombre del titular (tipo String)
  *	- Cantidad DEBE (tipo entero)
@@ -16,7 +16,7 @@ class CuentaSA {
    private int    debeCuenta;
    private int    haberCuenta;
 
-      /** Constructor básico          *
+      /** Constructor bï¿½sico          *
         *  - Requiere necesariamente  *
         *    un titular               */
    public CuentaSA(String titular) {
@@ -44,8 +44,8 @@ class CuentaSA {
       return haberCuenta - debeCuenta;
    }
 
-      /** Método toString para la     *
-        * impresión del contenido de  *
+      /** Mï¿½todo toString para la     *
+        * impresiï¿½n del contenido de  *
 	* de una cuenta               */
    public String toString() {
       String imprime = "   #>CUENTA: " +
@@ -57,13 +57,13 @@ class CuentaSA {
    }
 
 
-      /* Método Imposición */
+      /* Mï¿½todo Imposiciï¿½n */
    public boolean Imposicion(int cantidad) {
 	haberCuenta += cantidad;
 	return true;
    }
 
-      /* Método Reintegro */
+      /* Mï¿½todo Reintegro */
    public void Reintegro(int cantidad) throws ESaldoNoValido{
 	if (getSaldo() >= cantidad) {
 		debeCuenta += cantidad;

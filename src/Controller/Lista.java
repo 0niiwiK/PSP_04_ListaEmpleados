@@ -1,8 +1,8 @@
-package Controlador;
+package Controller;
 
-import Modelo.*;
-import usarExcepciones.EmpleadoNoEncontrado;
-import usarExcepciones.SueldoSuperiorAMaximo;
+import Model.*;
+import Exceptions.EmpleadoNoEncontrado;
+import Exceptions.SueldoSuperiorAMaximo;
 
 import java.io.*;
 
